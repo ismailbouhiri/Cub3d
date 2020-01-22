@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 15:59:51 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/06 16:53:42 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 11:50:41 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	ft_initionsation(t_win *ptr)
 	ptr->mlx_ptr = 0;
 	ptr->mlx_win = 0;
 	ptr->img = 0;
-	ptr->size_map_x = 0;
-	ptr->size_map_y = 0;
 	ptr->xintercept = 0;
 	ptr->yintercept = 0;
 	ptr->ystep = 0;
@@ -38,6 +36,8 @@ void	ft_initionsation(t_win *ptr)
 	ptr->size_y = 0;
 	ptr->size_x = 0;
 	ptr->size_square = 60;
+	ptr->fcolor = 0;
+	ptr->ccolor = 0;
 	ft_initionsation1(ptr);
 }
 
@@ -60,10 +60,21 @@ void	ft_gestion(t_win *ptr)
 		ft_texture(ptr);
 		ft_playerposition(ptr);
 		if (ptr->count != 1)
-			ft_error(1);
+		{
+			ft_clean(ptr);
+			ft_error(ptr, 1);
+		}
 	}
 	ptr->start = 0;
 	ft_wall3d(ptr);
+	ft_swap_ds();
+	g_draw = g_head;
+	while (g_head)
+	{
+		ft_cal_ds(ptr);
+		g_head = g_head->next;
+	}
+	g_head = g_draw;
 	mlx_put_image_to_window(ptr->mlx_ptr, ptr->mlx_win, ptr->img, 0, 0);
 }
 
@@ -78,12 +89,31 @@ void	ft_map_help(t_win *ptr, char *line)
 		save = ft_map_strlen(line);
 	}
 	if (line[0] != '0' && line[0] != '1' && ptr->size_y > 0)
-		ft_error(2);
+		ft_error(ptr, 2);
 	if (ptr->count == 0 && line[0] >= '0' && line[0] < '3')
 	{
 		ptr->size_x = ft_map_strlen(line);
 		ptr->count = 1;
 	}
 	if (save != ptr->size_x)
-		ft_error(2);
+		ft_error(ptr, 2);
+}
+
+void	ft_clean(t_win *ptr)
+{
+	int y;
+
+	y = 0;
+	free(ptr->img_xpm_x1_s);
+	free(ptr->img_xpm_x2_e);
+	free(ptr->img_xpm_x3_w);
+	free(ptr->img_xpm_x_n);
+	free(ptr->img_xpm_sprit);
+	while (y < ptr->size_y)
+	{
+		free(ptr->map[y]);
+		y++;
+	}
+	free((char **)ptr->map);
+	free(ptr);
 }

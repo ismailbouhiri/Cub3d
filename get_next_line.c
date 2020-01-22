@@ -5,70 +5,96 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/28 16:09:25 by ibouhiri          #+#    #+#             */
-/*   Updated: 2019/12/30 19:54:35 by ibouhiri         ###   ########.fr       */
+/*   Created: 2019/10/25 21:52:51 by mbani             #+#    #+#             */
+/*   Updated: 2020/01/11 11:42:17 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-static	void	ft_allocation(char **stock)
+#ifdef BUFFER_SIZE
+
+char	*ft_strjoin(char *s1, char *s2)
 {
-	*stock = (char *)malloc(sizeof(char));
-	*stock[0] = '\0';
+	unsigned int	len;
+	char			*s3;
+	unsigned int	len1;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	len1 = ft_strlen(s1);
+	len = len1 + ft_strlen(s2);
+	s3 = (char *)malloc(sizeof(char) * len + 1);
+	if (!s3)
+		return (NULL);
+	ft_strcpy(s3, (char *)s1);
+	s3 += len1;
+	ft_strcpy(s3, (char *)s2);
+	return (s3 - len1);
 }
 
-static	int		ft_read(char **stock, int fd)
+char	*save_check(char *save, char **line)
 {
-	char	*buff;
-	int		byte;
+	char *c;
+
+	c = NULL;
+	if (save)
+	{
+		if ((c = ft_strchr(save, '\n')))
+		{
+			*line = ft_strdup(save);
+			ft_strcpy(save, ++c);
+		}
+		else
+			*line = ft_strdup(save);
+	}
+	else
+		*line = ft_calloc(1, 1);
+	return (c);
+}
+
+int		body_check(char **save, char **buff)
+{
+	free(*save);
+	*save = NULL;
+	free(*buff);
+	return (0);
+}
+
+void	ft_save(char **save, char **ch)
+{
 	char	*tmp;
 
-	if (!(buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+	tmp = *save;
+	*ch = *ch + 1;
+	*save = ft_strdup(*ch);
+	free(tmp);
+}
+
+int		get_next_line(int fd, char **line)
+{
+	int			ret;
+	char		*buff;
+	static char	*save;
+	char		*ch;
+	char		*tmp;
+
+	if (read(fd, NULL, 0) != 0 || fd < 0 ||
+	!(buff = malloc(sizeof(char) * (BUFFER_SIZE + 1))) || !line)
 		return (-1);
-	buff[0] = '\0';
-	if (!*stock)
-		ft_allocation(stock);
-	while (ft_check(buff) && ft_check(*stock))
+	ch = save_check(save, line);
+	while (!(ch))
 	{
-		byte = read(fd, buff, BUFFER_SIZE);
-		if (byte == 0 || byte == -1)
-		{
-			free(buff);
-			return (byte);
-		}
-		buff[byte] = '\0';
-		tmp = *stock;
-		if (!(*stock = ft_strjoin(*stock, buff)))
-			return (-1);
+		if ((ret = read(fd, buff, BUFFER_SIZE)) == 0)
+			return (body_check(&save, &buff));
+		buff[ret] = '\0';
+		if ((ch = ft_strchr(buff, '\n')))
+			ft_save(&save, &ch);
+		tmp = *line;
+		*line = ft_strjoin(*line, buff);
 		free(tmp);
 	}
 	free(buff);
 	return (1);
 }
-
-int				get_next_line(int fd, char **line)
-{
-	static char	*stock;
-	int			res;
-	int			p;
-	char		*tmp;
-
-	res = ft_read(&stock, fd);
-	if (res == -1)
-		return (res);
-	p = ft_position(stock);
-	if (!(*line = (char *)malloc(sizeof(char) * (p + 1))))
-		return (-1);
-	ft_devision(*line, stock);
-	tmp = stock;
-	if (!(stock = ft_strdup(stock + (p + 1))))
-		return (-1);
-	free(tmp);
-	if (!res)
-	{
-		free(stock);
-		stock = NULL;
-	}
-	return (res);
-}
+#endif

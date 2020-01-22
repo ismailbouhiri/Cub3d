@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 17:54:18 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/10 11:15:37 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/13 12:19:54 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_chosethepoint(t_win *ptr)
 
 void	ft_vertcalcul(t_win *ptr)
 {
+	ptr->wall = '0';
 	ptr->xstep = ptr->size_square;
 	if (ptr->left == 1)
 		ptr->xstep *= -1;
@@ -61,7 +62,7 @@ void	ft_readmap(t_win *ptr)
 	y = 0;
 	i = 0;
 	ft_check_map(ptr);
-	ptr->map = malloc(sizeof(char**) * ptr->size_y + 1);
+	ptr->map = malloc(sizeof(char**) * (ptr->size_y + 1));
 	fd = open(*ptr->file, O_RDONLY);
 	while ((i = get_next_line(fd, &line)) != -1)
 	{
@@ -72,10 +73,4 @@ void	ft_readmap(t_win *ptr)
 			fd = open("asc.as", O_RDONLY);
 	}
 	ptr->map[y] = ft_strdup("\0");
-	if (ptr->size_map_x == 0 || ptr->size_map_y == 0)
-		ft_error(2);
-	if (ptr->size_map_x > 2560)
-		ptr->size_map_x = 2560;
-	if (ptr->size_map_y > 1440)
-		ptr->size_map_y = 1440;
 }

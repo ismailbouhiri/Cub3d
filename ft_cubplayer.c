@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 09:38:40 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/04 14:38:57 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/13 10:58:59 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ void	ft_vuangle(t_win *ptr)
 		ptr->left = 1;
 }
 
-void	ft_herozontal(t_win *ptr)
+void	ft_herizontal(t_win *ptr)
 {
-	ptr->wall = '0';
 	ft_vuangle(ptr);
 	ptr->yintercept = floor(ptr->y_origine / ptr->size_square)
 	* ptr->size_square;
@@ -47,7 +46,7 @@ void	ft_herozontal(t_win *ptr)
 	ptr->alpha = ptr->norangle * M_PI / 180;
 	ptr->xintercept = ptr->x_origine + (ptr->yintercept - ptr->y_origine)
 	/ tan(ptr->alpha);
-	ft_herocalcul(ptr);
+	ft_hericalcul(ptr);
 	ptr->yintercept += (ptr->up == 1) ? -1 : 1;
 	while (ptr->wall != '1' && ptr->wall != '3')
 	{
@@ -63,8 +62,9 @@ void	ft_herozontal(t_win *ptr)
 	ptr->yherowall = ptr->yintercept;
 }
 
-void	ft_herocalcul(t_win *ptr)
+void	ft_hericalcul(t_win *ptr)
 {
+	ptr->wall = '0';
 	ptr->ystep = ptr->size_square;
 	if (ptr->up == 1)
 		ptr->ystep *= -1;
@@ -77,7 +77,6 @@ void	ft_herocalcul(t_win *ptr)
 
 void	ft_vertical(t_win *ptr)
 {
-	ptr->wall = '0';
 	ptr->xintercept = floor(ptr->x_origine / ptr->size_square) *
 	ptr->size_square;
 	if (ptr->right == 1)

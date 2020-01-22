@@ -5,97 +5,93 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/25 10:23:28 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/03 11:39:33 by ibouhiri         ###   ########.fr       */
+/*   Created: 2019/10/27 22:25:21 by mbani             #+#    #+#             */
+/*   Updated: 2020/01/11 11:42:04 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	int		t;
-	int		lenofs1;
-	int		lenofs2;
-	char	*pointeur;
+	int i;
 
-	t = 0;
-	lenofs1 = ft_strlen(s1);
-	lenofs2 = ft_strlen(s2);
-	pointeur = (char*)malloc((lenofs1 + lenofs2) * sizeof(char) + 1);
-	if (!pointeur)
-		return (0);
-	while (lenofs1--)
+	i = 0;
+	while (src[i] != '\0')
 	{
-		pointeur[t] = s1[t];
-		t++;
+		dest[i] = src[i];
+		i++;
 	}
-	lenofs1 = 0;
-	while (lenofs2--)
-		pointeur[t++] = s2[lenofs1++];
-	pointeur[t] = '\0';
-	return (pointeur);
+	dest[i] = '\0';
+	return (dest);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	register void	*ptr;
+	register size_t	i;
+	register int	j;
+
+	j = 0;
+	i = (count * size);
+	ptr = malloc(count * size);
+	if (ptr)
+		while (i-- > 0)
+		{
+			*(unsigned char *)ptr = 0;
+			if (i != 0)
+			{
+				ptr++;
+				j++;
+			}
+		}
+	return (ptr - j);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	char b;
+	char *x;
+
+	x = (char *)s;
+	b = (unsigned char)c;
+	if (b == '\0')
+		return (x + ft_strlen(x));
+	while (*x)
+	{
+		if (b == *x)
+		{
+			*x = '\0';
+			return (x);
+		}
+		x++;
+	}
+	return (NULL);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	while (s1[i] != '\0')
+		i++;
+	str = (char*)malloc(sizeof(*str) * (i + 1));
+	if (!str)
+		return (NULL);
+	return (ft_strcpy(str, s1));
 }
 
 size_t	ft_strlen(const char *s)
 {
-	size_t	i;
-	int		x;
-
-	x = 0;
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-int		ft_position(char *dst)
-{
-	int i;
+	size_t i;
 
 	i = 0;
-	if (dst == NULL)
-		return (i);
-	while (dst[i])
+	while (*s)
 	{
-		if (dst[i] == '\n')
-		{
-			dst[i] = '\0';
-			return (i);
-		}
 		i++;
+		s++;
 	}
 	return (i);
-}
-
-char	*ft_devision(char *dst, char *src)
-{
-	int i;
-
-	i = 0;
-	if (!src)
-		return (NULL);
-	while (src[i] != '\0')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
-
-int		ft_check(char *dst)
-{
-	int i;
-
-	i = 0;
-	if (dst[i] == '\0')
-		return (1);
-	while (dst[i])
-	{
-		if (dst[i] == '\n')
-			return (0);
-		i++;
-	}
-	return (1);
 }
