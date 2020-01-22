@@ -6,13 +6,13 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 11:55:39 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 15:50:35 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 20:18:32 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-void		ft_bmp_file(t_win *ptr)
+void			ft_bmp_file(t_win *ptr)
 {
 	t_str bmp;
 
@@ -30,7 +30,7 @@ void		ft_bmp_file(t_win *ptr)
 	ft_bmp_next(ptr, &bmp);
 }
 
-void		ft_bmp_next(t_win *ptr, t_str *bmp)
+void			ft_bmp_next(t_win *ptr, t_str *bmp)
 {
 	unsigned char	*buf;
 	int				row;
@@ -59,21 +59,40 @@ void		ft_bmp_next(t_win *ptr, t_str *bmp)
 	ft_bmp_last(bmp, buf);
 }
 
-void		ft_bmp_last(t_str *bmp, unsigned char *buf)
+void			ft_bmp_last(t_str *bmp, unsigned char *buf)
 {
 	int fd;
 
-	fd = open("Cub3D.bmp", O_WRONLY | O_CREAT, 500);
+	fd = open("Cub3D.bmp", O_WRONLY | O_CREAT | O_APPEND, 500);
 	write(fd, bmp->header, 54);
 	write(fd, buf, bmp->imagesize);
 	free(buf);
 }
 
-long long	ft_get_img_pix(t_win *ptr, int x, int y)
+long	long	ft_get_img_pix(t_win *ptr, int x, int y)
 {
 	int a;
 	int *add;
 
 	add = (int *)mlx_get_data_addr(ptr->img, &a, &a, &a);
 	return (add[y * ptr->size_map_x + x]);
+}
+
+void			ft_help(t_win *ptr, int a)
+{
+	if (a == 1)
+	{
+		ptr->color = ptr->ccolor;
+		img_put(ptr->x, ptr->y, ptr);
+		if (ptr->x >= 0 && ptr->x < ptr->size_map_x &&
+		ptr->y >= 0 && ptr->y < ptr->size_map_y)
+			img_put(ptr->x, ptr->y, ptr);
+	}
+	else
+	{
+		ptr->color = ptr->fcolor;
+		if (ptr->x >= 0 && ptr->x < ptr->size_map_x &&
+		ptr->y >= 0 && ptr->y < ptr->size_map_y)
+			img_put(ptr->x, ptr->y, ptr);
+	}
 }

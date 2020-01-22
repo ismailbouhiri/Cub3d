@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 17:54:18 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/13 12:19:54 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 19:02:51 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,14 @@ void	ft_readmap(t_win *ptr)
 	ft_check_map(ptr);
 	ptr->map = malloc(sizeof(char**) * (ptr->size_y + 1));
 	fd = open(*ptr->file, O_RDONLY);
-	while ((i = get_next_line(fd, &line)) != -1)
+	while ((i = get_next_line(fd, &line)) >= 0)
 	{
 		ft_colotex(ptr, line);
 		if (line[0] == '0' || line[0] == '1')
 			ptr->map[y++] = ft_map_strdup(line);
+		free(line);
 		if (i == 0)
-			fd = open("asc.as", O_RDONLY);
+			break ;
 	}
 	ptr->map[y] = ft_strdup("\0");
 }

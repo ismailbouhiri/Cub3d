@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 15:59:51 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 14:10:08 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 20:00:27 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,7 @@ void	ft_gestion(t_win *ptr)
 	ptr->start = 0;
 	ft_wall3d(ptr);
 	ft_swap_ds();
-	g_draw = g_head;
-	while (g_head)
-	{
-		ft_cal_ds(ptr);
-		g_head = g_head->next;
-	}
-	g_head = g_draw;
-	if (ptr->argc == 1)
-	{
-		ft_bmp_file(ptr);
-		ft_clean(ptr);
-		exit(0);
-	}
+	ft_hep_spri(ptr);
 	mlx_put_image_to_window(ptr->mlx_ptr, ptr->mlx_win, ptr->img, 0, 0);
 }
 

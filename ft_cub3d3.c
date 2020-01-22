@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 10:28:19 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 15:33:38 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:10:23 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,32 @@ int		ft_check_arg(int argc, char *dst)
 		}
 	}
 	return (0);
+}
+
+void	ft_move(t_win *ptr)
+{
+	float speed;
+	float me;
+
+	speed = 5;
+	me = ptr->angle;
+	me -= 90;
+	ptr->wall = ft_wallstop(ptr, 2 * cos(me * M_PI / 180) * speed
+	+ ptr->x_origine, 2 * sin(me * M_PI / 180) * speed + ptr->y_origine);
+	if (go.left == 1 && ptr->wall != '2' && ptr->wall != '1')
+	{
+		ptr->x_origine = cos(me * M_PI / 180) * speed + ptr->x_origine;
+		ptr->y_origine = sin(me * M_PI / 180) * speed + ptr->y_origine;
+	}
+	ptr->wall = ft_wallstop(ptr, 2 * -cos(me * M_PI / 180) * speed
+	+ ptr->x_origine, 2 * -sin(me * M_PI / 180) * speed + ptr->y_origine);
+	if (go.right == 1 && ptr->wall != '2' && ptr->wall != '1')
+	{
+		ptr->x_origine = -cos(me * M_PI / 180) * speed + ptr->x_origine;
+		ptr->y_origine = -sin(me * M_PI / 180) * speed + ptr->y_origine;
+	}
+	if (go.cam_right == 1)
+		ptr->origine_angle += 5;
+	if (go.cam_left == 1)
+		ptr->origine_angle -= 5;
 }

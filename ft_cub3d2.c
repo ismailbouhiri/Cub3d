@@ -6,51 +6,51 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 20:35:17 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 14:11:34 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:28:30 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-int		ft_keybord(int key, t_win *ptr)
+int		ft_keybord(t_win *ptr)
 {
 	if (ptr->angle == 360 || ptr->angle == -360)
 		ptr->angle = 0;
-	if (key == 53)
+	if (go.esc == 1)
 		exit(0);
-	if (key == 0 || key == 13 || key == 1 || key == 2)
+	if (go.back == 1 || go.cam_left == 1 || go.cam_right == 1
+	|| go.front == 1 || go.left == 1 || go.right == 1)
 	{
-		ft_keypress(key, ptr);
+		ft_keypress(ptr);
 		mlx_destroy_image(ptr->mlx_ptr, ptr->img);
 		ft_gestion(ptr);
 	}
 	return (1);
 }
 
-void	ft_keypress(int key, t_win *ptr)
+void	ft_keypress(t_win *ptr)
 {
 	float speed;
 
-	speed = 15;
-	if (key == 2)
-		ptr->angle += 5;
-	if (key == 0)
-		ptr->angle -= 5;
+	speed = 7;
+	ptr->origine_angle = ptr->angle;
+	ft_move(ptr);
 	ptr->wall = ft_wallstop(ptr, 4 * cos(ptr->angle * M_PI / 180) * speed
 	+ ptr->x_origine, 4 * sin(ptr->angle * M_PI / 180) * speed +
 	ptr->y_origine);
-	if (key == 13 && ptr->wall != '1' && ptr->wall != '2')
+	if (go.front == 1 && ptr->wall != '1' && ptr->wall != '2')
 	{
 		ptr->x_origine = cos(ptr->angle * M_PI / 180) * speed + ptr->x_origine;
 		ptr->y_origine = sin(ptr->angle * M_PI / 180) * speed + ptr->y_origine;
 	}
 	ptr->wall = ft_wallstop(ptr, 4 * -cos(ptr->angle * M_PI / 180) * speed +
 	ptr->x_origine, 4 * -sin(ptr->angle * M_PI / 180) * speed + ptr->y_origine);
-	if (key == 1 && ptr->wall != '1' && ptr->wall != '2')
+	if (go.back == 1 && ptr->wall != '1' && ptr->wall != '2')
 	{
 		ptr->x_origine = -cos(ptr->angle * M_PI / 180) * speed + ptr->x_origine;
 		ptr->y_origine = -sin(ptr->angle * M_PI / 180) * speed + ptr->y_origine;
 	}
+	ptr->angle = ptr->origine_angle;
 }
 
 char	ft_wallstop(t_win *ptr, float x, float y)
@@ -111,10 +111,7 @@ void	ft_draw_sprit(t_win *ptr)
 			ptr->color = add[(ptr->s_x * (j * ptr->s_y / ptr->spt_size))
 			+ (((int)ptr->y) * ptr->s_x / ptr->spt_size)];
 			if (ptr->color != add[0])
-				if ((ptr->x_sp + ((int)ptr->y)) >= 0 && (ptr->x_sp +
-				((int)ptr->y)) < ptr->size_map_x && ptr->y_sp + j >= 0
-				&& ptr->y_sp + j < ptr->size_map_y)
-					img_put((ptr->x_sp + ((int)ptr->y)), ptr->y_sp + j, ptr);
+				img_put((ptr->x_sp + ((int)ptr->y)), ptr->y_sp + j, ptr);
 		}
 	}
 }

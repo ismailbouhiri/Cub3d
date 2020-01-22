@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 20:47:17 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 15:31:31 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:29:54 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	ft_ini_bmp(t_win *ptr, t_str *bmp)
 int		main(int argc, char **argv)
 {
 	t_win *ptr;
+
 	if (argc > 3 || ft_check_arg(argc, argv[2]))
 	{
 		perror("error\n(argument)");
@@ -110,7 +111,10 @@ int		main(int argc, char **argv)
 	ptr->mlx_win = mlx_new_window(ptr->mlx_ptr, ptr->size_map_x,
 	ptr->size_map_y, "cub3d");
 	ft_gestion(ptr);
-	mlx_hook(ptr->mlx_win, 2, 0, ft_keybord, ptr);
+	mlx_hook(ptr->mlx_win, 2, 0, ft_press, NULL);
+	mlx_hook(ptr->mlx_win, 3, 0, ft_rel, NULL);
+	mlx_hook(ptr->mlx_win, 17, 0, ft_x, NULL);
+	mlx_loop_hook(ptr->mlx_ptr, ft_keybord, ptr);
 	mlx_loop(ptr->mlx_ptr);
 	free(ptr);
 	return (0);

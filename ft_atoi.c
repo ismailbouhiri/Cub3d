@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 10:28:19 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 12:22:32 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 19:41:20 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,6 @@ void	ft_texture(t_win *ptr)
 		perror("error\n(aucun texture)");
 		exit(0);
 	}
-	free(ptr->texture_n);
-	free(ptr->texture_s);
-	free(ptr->sprit);
-	free(ptr->texture_e);
-	free(ptr->texture_w);
 }
 
 void	ft_color2(t_win *ptr)

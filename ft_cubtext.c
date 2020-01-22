@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 14:34:02 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/21 20:05:19 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 19:12:54 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_colotex(t_win *ptr, char *line)
 		ptr->texture_w = ft_map_strdup(line + 2);
 	if (line[0] == 'E' && line[1] == 'A')
 		ptr->texture_e = ft_map_strdup(line + 2);
-	if (line[0] == 'S')
+	if (line[0] == 'S' && line[1] != 'O')
 		ptr->sprit = ft_map_strdup(line + 1);
 	if (line[0] == 'R')
 		ft_resulotion(ptr, line + 2);

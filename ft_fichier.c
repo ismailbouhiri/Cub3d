@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:33:50 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/21 20:08:16 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 19:40:51 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ void	ft_check_map(t_win *ptr)
 
 	if ((fd = open(*ptr->file, O_RDONLY)) < 0)
 		ft_error(ptr, 3);
-	while ((i = get_next_line(fd, &line)) != -1)
+	while ((i = get_next_line(fd, &line)) >= 0)
 	{
 		if (line[0] == 'F' || line[0] == 'C')
 			ft_rgb(ptr, line);
 		ft_map_help(ptr, line);
+		free(line);
 		if (i == 0)
-			fd = open("abcd", O_RDONLY);
+			break ;
 	}
 }
 
