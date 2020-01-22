@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 10:28:19 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/21 20:04:10 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 12:22:32 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_initionsation1(t_win *ptr)
 	ptr->x_sp = 0;
 	ptr->y_sp = 0;
 	ptr->sp_dr = 0;
+	ptr->argc = 0;
 }
 
 void	ft_color(t_win *ptr)

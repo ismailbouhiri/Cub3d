@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 15:09:30 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 11:50:34 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 12:17:54 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <time.h>
+# include <string.h>
 # define BUFFER_SIZE 1
 
 typedef struct s_objet
@@ -38,13 +39,16 @@ static const float g_fov_angle = 60.0 * (M_PI / 180);
 
 typedef struct s_bmp
 {
-    unsigned int bitcount;
-	int width_in_bytes;
-	unsigned int imagesize;
-	unsigned int bisize;
-	unsigned int bfOffbits;
-	unsigned int filesize;
-	unsigned int biplanes;
+	int				width;
+	int				height;
+    unsigned	int	bitcount;
+	int				width_in_bytes;
+	unsigned int	imagesize;
+	unsigned int	bisize;
+	unsigned int	bfOffbits;
+	unsigned int	filesize;
+	char			*header;
+	unsigned int	biplanes;
 }		t_str;
 
 typedef struct	s_x
@@ -120,55 +124,60 @@ typedef struct	s_x
 	int		ccolor;
 	int		argc;
 }				t_win;
-void	ft_initionsation(t_win *ptr);
-void	img_put(int x, int y, t_win *ptr);
-void	ft_gestion(t_win *ptr);
-int		ft_keybord(int key, t_win *ptr);
-void	ft_keypress(int key, t_win *ptr);
-char	ft_wallstop(t_win *ptr, float x, float y);
-float	ft_normalizangle(float angle);
-void	ft_vuangle(t_win *ptr);
-void	ft_herizontal(t_win *ptr);
-void	ft_hericalcul(t_win *ptr);
-void	ft_vertcalcul(t_win *ptr);
-void	ft_vertical(t_win *ptr);
-void	ft_chosethepoint(t_win *ptr);
-void	ft_readmap(t_win *ptr);
-void	ft_wall3d(t_win *ptr);
-void	ft_playerposition(t_win *ptr);
-void	ft_draw_line(t_win *ptr);
-void	ft_calcul_wall(t_win *ptr);
-void	ft_initionsation1(t_win *ptr);
-void	ft_color(t_win *ptr);
-void	ft_texture(t_win *ptr);
-void	ft_color2(t_win *ptr);
-size_t	ft_map_strlen(const char *s);
-char	*ft_map_strdup(const char *s1);
-void	ft_check_map(t_win *ptr);
-void	ft_resulotion(t_win *ptr, char *line);
-int		ft_atoi(const char *str);
-void	ft_error(t_win *ptr, int a);
-void	ft_help_player(t_win *ptr, int *mapx, int *mapy);
-void	ft_colotex(t_win *ptr, char *line);
-void	ft_map_help(t_win *ptr, char *line);
-void	ft_clean(t_win *ptr);
-void	ft_sprit_corr(t_win *ptr);
-t_list	*ft_lstnew(float x, float y, float ds);
-void	ft_lstadd_back(t_list **head, t_list *new);
-int		get_next_line(int fd, char **line);
-int		check(int *p, char *buff);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strcpy(char *dest, const char *src);
-char	*ft_strdup(const char *s1);
-char	*ft_strchr(const char *s, int c);
-size_t	ft_strlen(const char *s);
-void	*ft_calloc(size_t count, size_t size);
-void	ft_cal_ds(t_win *ptr);
-void	ft_draw_sprit(t_win *ptr);
-void	ft_swap(float *a, float *b);
-void	ft_swap_ds();
-void	ft_what(t_win *ptr, int *mapx, int *mapy);
-void	ft_rgb(t_win *ptr, char *line);
-void	ft_rgb_help(t_win *ptr, char *line);
+void		ft_initionsation(t_win *ptr);
+void		img_put(int x, int y, t_win *ptr);
+void		ft_gestion(t_win *ptr);
+int			ft_keybord(int key, t_win *ptr);
+void		ft_keypress(int key, t_win *ptr);
+char		ft_wallstop(t_win *ptr, float x, float y);
+float		ft_normalizangle(float angle);
+void		ft_vuangle(t_win *ptr);
+void		ft_herizontal(t_win *ptr);
+void		ft_hericalcul(t_win *ptr);
+void		ft_vertcalcul(t_win *ptr);
+void		ft_vertical(t_win *ptr);
+void		ft_chosethepoint(t_win *ptr);
+void		ft_readmap(t_win *ptr);
+void		ft_wall3d(t_win *ptr);
+void		ft_playerposition(t_win *ptr);
+void		ft_draw_line(t_win *ptr);
+void		ft_calcul_wall(t_win *ptr);
+void		ft_initionsation1(t_win *ptr);
+void		ft_color(t_win *ptr);
+void		ft_texture(t_win *ptr);
+void		ft_color2(t_win *ptr);
+size_t		ft_map_strlen(const char *s);
+char		*ft_map_strdup(const char *s1);
+void		ft_check_map(t_win *ptr);
+void		ft_resulotion(t_win *ptr, char *line);
+int			ft_atoi(const char *str);
+void		ft_error(t_win *ptr, int a);
+void		ft_help_player(t_win *ptr, int *mapx, int *mapy);
+void		ft_colotex(t_win *ptr, char *line);
+void		ft_map_help(t_win *ptr, char *line);
+void		ft_clean(t_win *ptr);
+void		ft_sprit_corr(t_win *ptr);
+t_list		*ft_lstnew(float x, float y, float ds);
+void		ft_lstadd_back(t_list **head, t_list *new);
+int			get_next_line(int fd, char **line);
+int			check(int *p, char *buff);
+char		*ft_strjoin(char *s1, char *s2);
+char		*ft_strcpy(char *dest, const char *src);
+char		*ft_strdup(const char *s1);
+char		*ft_strchr(const char *s, int c);
+size_t		ft_strlen(const char *s);
+void		*ft_calloc(size_t count, size_t size);
+void		ft_cal_ds(t_win *ptr);
+void		ft_draw_sprit(t_win *ptr);
+void		ft_swap(float *a, float *b);
+void		ft_swap_ds();
+void		ft_what(t_win *ptr, int *mapx, int *mapy);
+void		ft_rgb(t_win *ptr, char *line);
+void		ft_rgb_help(t_win *ptr, char *line);
+void		ft_ini_bmp(t_win *ptr, t_str *bmp);
+long long	ft_get_img_pix(t_win *ptr, int x, int y);
+void		ft_bmp_last(t_str *bmp, unsigned char *buf);
+void		ft_bmp_next(t_win *ptr, t_str *bmp);
+void		ft_bmp_file(t_win *ptr);
 
 #endif

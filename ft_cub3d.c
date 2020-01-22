@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 20:47:17 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 11:53:58 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 12:22:22 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,24 +79,23 @@ void	ft_what(t_win *ptr, int *mapx, int *mapy)
 	}
 }
 
-void	ft_ini_bmp(t_win *ptr)
+void	ft_ini_bmp(t_win *ptr, t_str *bmp)
 {
-	t_str str;
-
-	str.bitcount = 24;
-	str.width_in_bytes = ((ptr->size_map_x * str.bitcount + 31) / 32) * 4;
-	str.imagesize = str.width_in_bytes * ptr->size_map_y;
-	str.bisize = 40;
-	str.bfOffbits = 54;
-	str.filesize = 54 + str.imagesize;
-	str.biplanes = 1;
+	bmp->width = ptr->size_map_x;
+	bmp->height = ptr->size_map_y;
+	bmp->bitcount = 24;
+	bmp->width_in_bytes = ((ptr->size_map_x * bmp->bitcount + 31) / 32) * 4;
+	bmp->imagesize = bmp->width_in_bytes * ptr->size_map_y;
+	bmp->bisize = 40;
+	bmp->bfOffbits = 54;
+	bmp->filesize = 54 + bmp->imagesize;
+	bmp->biplanes = 1;
 }
 
 int		main(int argc, char **argv)
 {
 	t_win *ptr;
-
-	if (argc != 2)
+	if (argc > 3)
 	{
 		perror("error\n(argument)");
 		exit(0);
@@ -104,6 +103,8 @@ int		main(int argc, char **argv)
 	ptr = malloc(sizeof(t_win));
 	ptr->file = &argv[1];
 	ft_initionsation(ptr);
+	if (argc == 3)
+		ptr->argc = 1;
 	ft_readmap(ptr);
 	ptr->mlx_ptr = mlx_init();
 	ptr->mlx_win = mlx_new_window(ptr->mlx_ptr, ptr->size_map_x,

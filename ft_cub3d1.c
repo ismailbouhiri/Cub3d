@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 15:59:51 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 11:50:41 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 12:26:04 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,12 @@ void	ft_gestion(t_win *ptr)
 		g_head = g_head->next;
 	}
 	g_head = g_draw;
+	if (ptr->argc == 1)
+	{
+		ft_bmp_file(ptr);
+		ft_clean(ptr);
+		exit(0);
+	}
 	mlx_put_image_to_window(ptr->mlx_ptr, ptr->mlx_win, ptr->img, 0, 0);
 }
 
