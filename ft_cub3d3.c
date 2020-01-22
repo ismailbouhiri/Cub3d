@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 10:28:19 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/03 18:19:26 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:33:38 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,42 @@ int		ft_atoi(const char *str)
 		i++;
 	}
 	return (res * sign);
+}
+
+char	*ft_memcpy(char *dst, const void *src, size_t n)
+{
+	size_t		i;
+	const char	*s2;
+	char		*s1;
+
+	i = 0;
+	s1 = dst;
+	s2 = src;
+	if (dst == NULL && src == NULL)
+		return (NULL);
+	while (i < n)
+	{
+		s1[i] = s2[i];
+		i++;
+	}
+	return (dst);
+}
+
+int		ft_check_arg(int argc, char *dst)
+{
+	int		i;
+	char	*str;
+
+	str = "--save";
+	i = 0;
+	if (argc == 3)
+	{
+		while (str[i])
+		{
+			if (dst[i] != str[i])
+				return (1);
+			i++;
+		}
+	}
+	return (0);
 }

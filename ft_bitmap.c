@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 11:55:39 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 12:20:36 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:50:35 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void		ft_bmp_file(t_win *ptr)
 	t_str bmp;
 
 	ft_ini_bmp(ptr, &bmp);
-	bmp.header = (char *)calloc(54, sizeof(unsigned char));
-	memcpy(bmp.header, "BM", 2);
-	memcpy(bmp.header + 2, &bmp.filesize, 4);
-	memcpy(bmp.header + 10, &bmp.bfOffbits, 4);
-	memcpy(bmp.header + 14, &bmp.bisize, 4);
-	memcpy(bmp.header + 18, &bmp.width, 4);
-	memcpy(bmp.header + 22, &bmp.height, 4);
-	memcpy(bmp.header + 26, &bmp.biplanes, 2);
-	memcpy(bmp.header + 28, &bmp.bitcount, 2);
-	memcpy(bmp.header + 34, &bmp.imagesize, 4);
+	bmp.header = (char *)ft_calloc(54, sizeof(unsigned char));
+	ft_memcpy(bmp.header, "BM", 2);
+	ft_memcpy(bmp.header + 2, &bmp.filesize, 4);
+	ft_memcpy(bmp.header + 10, &bmp.ffbits, 4);
+	ft_memcpy(bmp.header + 14, &bmp.bisize, 4);
+	ft_memcpy(bmp.header + 18, &bmp.width, 4);
+	ft_memcpy(bmp.header + 22, &bmp.height, 4);
+	ft_memcpy(bmp.header + 26, &bmp.biplanes, 2);
+	ft_memcpy(bmp.header + 28, &bmp.bitcount, 2);
+	ft_memcpy(bmp.header + 34, &bmp.imagesize, 4);
 	ft_bmp_next(ptr, &bmp);
 }
 
@@ -63,7 +63,7 @@ void		ft_bmp_last(t_str *bmp, unsigned char *buf)
 {
 	int fd;
 
-	fd = open("cub3d.bmp", O_WRONLY | O_TRUNC | O_CREAT | O_APPEND, 500);
+	fd = open("Cub3D.bmp", O_WRONLY | O_CREAT, 500);
 	write(fd, bmp->header, 54);
 	write(fd, buf, bmp->imagesize);
 	free(buf);
@@ -71,11 +71,9 @@ void		ft_bmp_last(t_str *bmp, unsigned char *buf)
 
 long long	ft_get_img_pix(t_win *ptr, int x, int y)
 {
-	int endian;
-	int sizeline;
-	int bpp;
+	int a;
 	int *add;
 
-	add = (int *)mlx_get_data_addr(ptr->img, &bpp, &sizeline, &endian);
+	add = (int *)mlx_get_data_addr(ptr->img, &a, &a, &a);
 	return (add[y * ptr->size_map_x + x]);
 }

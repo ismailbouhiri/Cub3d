@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 20:47:17 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 12:22:22 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:31:31 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_ini_bmp(t_win *ptr, t_str *bmp)
 	bmp->width_in_bytes = ((ptr->size_map_x * bmp->bitcount + 31) / 32) * 4;
 	bmp->imagesize = bmp->width_in_bytes * ptr->size_map_y;
 	bmp->bisize = 40;
-	bmp->bfOffbits = 54;
+	bmp->ffbits = 54;
 	bmp->filesize = 54 + bmp->imagesize;
 	bmp->biplanes = 1;
 }
@@ -95,7 +95,7 @@ void	ft_ini_bmp(t_win *ptr, t_str *bmp)
 int		main(int argc, char **argv)
 {
 	t_win *ptr;
-	if (argc > 3)
+	if (argc > 3 || ft_check_arg(argc, argv[2]))
 	{
 		perror("error\n(argument)");
 		exit(0);

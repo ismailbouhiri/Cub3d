@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 11:30:07 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/21 20:07:14 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 14:36:46 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,23 @@ void	ft_draw_line(t_win *ptr)
 		if (ptr->y < ptr->y_start)
 		{
 			ptr->color = ptr->ccolor;
-			img_put(ptr->x, ptr->y, ptr);
+			if (ptr->x >= 0 && ptr->x < ptr->size_map_x &&
+			ptr->y >= 0 && ptr->y < ptr->size_map_y)
+				img_put(ptr->x, ptr->y, ptr);
 		}
 		else if (ptr->y >= ptr->y_end)
 		{
 			ptr->color = ptr->fcolor;
-			img_put(ptr->x, ptr->y, ptr);
+			if (ptr->x >= 0 && ptr->x < ptr->size_map_x &&
+			ptr->y >= 0 && ptr->y < ptr->size_map_y)
+				img_put(ptr->x, ptr->y, ptr);
 		}
 		else if (count >= ptr->y_start && count < ptr->y_end)
 		{
 			ft_color(ptr);
-			img_put(ptr->x, count, ptr);
+			if (ptr->x >= 0 && ptr->x < ptr->size_map_x &&
+			count >= 0 && count < ptr->size_map_y)
+				img_put(ptr->x, count, ptr);
 			ptr->off_y += ptr->offs_y;
 			ptr->y = count++;
 		}

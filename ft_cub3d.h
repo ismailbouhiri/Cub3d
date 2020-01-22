@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 15:09:30 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 12:17:54 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:31:25 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ typedef struct s_bmp
 {
 	int				width;
 	int				height;
-    unsigned	int	bitcount;
+	unsigned	int	bitcount;
 	int				width_in_bytes;
-	unsigned int	imagesize;
-	unsigned int	bisize;
-	unsigned int	bfOffbits;
-	unsigned int	filesize;
+	unsigned	int	imagesize;
+	unsigned	int	bisize;
+	unsigned	int	ffbits;
+	unsigned	int	filesize;
 	char			*header;
 	unsigned int	biplanes;
 }		t_str;
@@ -179,5 +179,7 @@ long long	ft_get_img_pix(t_win *ptr, int x, int y);
 void		ft_bmp_last(t_str *bmp, unsigned char *buf);
 void		ft_bmp_next(t_win *ptr, t_str *bmp);
 void		ft_bmp_file(t_win *ptr);
+char		*ft_memcpy(char *dst, const void *src, size_t n);
+int			ft_check_arg(int argc, char *dst);
 
 #endif

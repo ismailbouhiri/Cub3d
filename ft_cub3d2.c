@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 20:35:17 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/21 20:11:13 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/22 14:11:34 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ void	ft_keypress(int key, t_win *ptr)
 		ptr->angle += 5;
 	if (key == 0)
 		ptr->angle -= 5;
-	ptr->wall = ft_wallstop(ptr, 3 * cos(ptr->angle * M_PI / 180) * speed
-	+ ptr->x_origine, 3 * sin(ptr->angle * M_PI / 180) * speed +
+	ptr->wall = ft_wallstop(ptr, 4 * cos(ptr->angle * M_PI / 180) * speed
+	+ ptr->x_origine, 4 * sin(ptr->angle * M_PI / 180) * speed +
 	ptr->y_origine);
 	if (key == 13 && ptr->wall != '1' && ptr->wall != '2')
 	{
 		ptr->x_origine = cos(ptr->angle * M_PI / 180) * speed + ptr->x_origine;
 		ptr->y_origine = sin(ptr->angle * M_PI / 180) * speed + ptr->y_origine;
 	}
-	ptr->wall = ft_wallstop(ptr, 3 * -cos(ptr->angle * M_PI / 180) * speed +
-	ptr->x_origine, 3 * -sin(ptr->angle * M_PI / 180) * speed + ptr->y_origine);
+	ptr->wall = ft_wallstop(ptr, 4 * -cos(ptr->angle * M_PI / 180) * speed +
+	ptr->x_origine, 4 * -sin(ptr->angle * M_PI / 180) * speed + ptr->y_origine);
 	if (key == 1 && ptr->wall != '1' && ptr->wall != '2')
 	{
 		ptr->x_origine = -cos(ptr->angle * M_PI / 180) * speed + ptr->x_origine;
@@ -111,7 +111,10 @@ void	ft_draw_sprit(t_win *ptr)
 			ptr->color = add[(ptr->s_x * (j * ptr->s_y / ptr->spt_size))
 			+ (((int)ptr->y) * ptr->s_x / ptr->spt_size)];
 			if (ptr->color != add[0])
-				img_put((ptr->x_sp + ((int)ptr->y)), ptr->y_sp + j, ptr);
+				if ((ptr->x_sp + ((int)ptr->y)) >= 0 && (ptr->x_sp +
+				((int)ptr->y)) < ptr->size_map_x && ptr->y_sp + j >= 0
+				&& ptr->y_sp + j < ptr->size_map_y)
+					img_put((ptr->x_sp + ((int)ptr->y)), ptr->y_sp + j, ptr);
 		}
 	}
 }
