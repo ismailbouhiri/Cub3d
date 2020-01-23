@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 15:09:30 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 20:18:06 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/23 13:06:46 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void			ft_bmp_last(t_str *bmp, unsigned char *buf);
 void			ft_bmp_next(t_win *ptr, t_str *bmp);
 void			ft_bmp_file(t_win *ptr);
 char			*ft_memcpy(char *dst, const void *src, size_t n);
-int				ft_check_arg(int argc, char *dst);
+int				ft_check_arg(int argc, char *dst, int a);
 void			ft_move(t_win *ptr);
 int				ft_rel(int key);
 int				ft_press(int key);
@@ -200,5 +200,6 @@ int				ft_x(t_win *ptr);
 void			ft_draw_line1(t_win *ptr);
 void			ft_hep_spri(t_win *ptr);
 void			ft_help(t_win *ptr, int a);
+int				ft_check_arg2(int argc, char *dst);
 
 #endif

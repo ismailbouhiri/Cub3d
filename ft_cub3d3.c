@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 10:28:19 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 18:10:23 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/23 14:49:10 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,47 @@ char	*ft_memcpy(char *dst, const void *src, size_t n)
 	return (dst);
 }
 
-int		ft_check_arg(int argc, char *dst)
+int		ft_check_arg2(int argc, char *dst)
+{
+	char	*str;
+	int		j;
+	int		i;
+
+	i = 0;
+	j = 0;
+	str = ".cub\0";
+	while (dst[i] && str[j])
+	{
+		if (dst[i] == str[j])
+			j++;
+		i++;
+	}
+	if (j != 4 || dst[i] != '\0')
+		return (1);
+	return (0);
+}
+
+int		ft_check_arg(int argc, char *dst, int a)
 {
 	int		i;
 	char	*str;
+	int		j;
 
-	str = "--save";
 	i = 0;
-	if (argc == 3)
+	j = 0;
+	if (a == 1)
 	{
-		while (str[i])
-		{
-			if (dst[i] != str[i])
-				return (1);
-			i++;
-		}
+		str = "--save";
+		if (argc == 3)
+			while (str[i])
+			{
+				if (dst[i] != str[i])
+					return (1);
+				i++;
+			}
 	}
+	else
+		return (ft_check_arg2(argc, dst));
 	return (0);
 }
 

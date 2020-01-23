@@ -6,7 +6,7 @@
 /*   By: ibouhiri <ibouhiri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 20:47:17 by ibouhiri          #+#    #+#             */
-/*   Updated: 2020/01/22 18:29:54 by ibouhiri         ###   ########.fr       */
+/*   Updated: 2020/01/23 14:34:39 by ibouhiri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ int		main(int argc, char **argv)
 {
 	t_win *ptr;
 
-	if (argc > 3 || ft_check_arg(argc, argv[2]))
+	if (argc > 3 || argc == 1 || ft_check_arg(argc, argv[2], 1)
+	|| ft_check_arg(argc, argv[1], 3))
 	{
 		perror("error\n(argument)");
 		exit(0);
